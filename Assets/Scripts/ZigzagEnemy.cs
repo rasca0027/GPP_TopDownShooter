@@ -1,22 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DiagonalEnemy : Enemy {
+public class ZigzagEnemy : Enemy {
 
 	private bool flag;
 
-	public DiagonalEnemy(GameObject obj) : base(obj) {
+	public ZigzagEnemy() : base() {
 		
 		// constructor
+		
+	}
+
+	public override void move() {
+		// override
+		DiagonalMove (flag);
+	}
+
+	void Start() {
 		health = 1;
 		moveSpeed = 3f;
 		missileType = 1;
-		flag = true;
-		
+		flag = false;
+		InvokeRepeating ("changeDirection", 0f, 2f);
+		InvokeRepeating ("Shoot", 0f, 1f);
 	}
-	
-	public override void move() {
-		// override
-		DiagonalMove (true);
+
+	void Update() {
+		if (health <= 0)
+			Destroy (gameObject);
+		move ();
 	}
+
+	void changeDirection() {
+		flag = !flag;
+	}
+
+	void Shoot() {
+		shootForward ();
+	}
+
 }

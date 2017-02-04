@@ -3,13 +3,9 @@ using System.Collections;
 
 public class StraightEnemy : Enemy {
 
-	public StraightEnemy(GameObject obj) : base(obj) {
+	public StraightEnemy() : base() {
 
 		// constructor
-		health = 2;
-		moveSpeed = 3f;
-		missileType = 1;
-
 	}
 
 	public override void move() {
@@ -17,4 +13,24 @@ public class StraightEnemy : Enemy {
 		flyIn ();
 
 	}
+
+	void Start() {
+		health = 2;
+		moveSpeed = 3f;
+		missileType = 1;
+		InvokeRepeating ("Shoot", 0f, 0.6f);
+
+	}
+
+	void Update () {
+		if (health <= 0)
+			Destroy (gameObject);
+		move ();
+
+	}
+
+	void Shoot() {
+		shootSides ();
+	}
+
 }
