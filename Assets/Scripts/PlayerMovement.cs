@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float speed = 5f;
 	public GameObject bullet;
 	public float thrust = 250f;
+	public int health = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -30,11 +31,27 @@ public class PlayerMovement : MonoBehaviour {
 		transform.position = pos;
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			GameObject obj = Instantiate(bullet);
-			obj.transform.position = transform.position + transform.up * 0.5f;
-			obj.GetComponent<Rigidbody2D>().AddForce(transform.up * thrust);
-
+			Shoot();
 		}
 
+		// check life
+		if (health <= 0) {
+			// die
+			// die animation blah blah
+			Debug.Log ("you die");
+		}
+
+	}
+
+	void OnCollisionEnter2D(Collision2D coll) {
+		Debug.Log ("hit");
+		health -= 1;
+	}
+
+	void Shoot() {
+		GameObject obj = Instantiate(bullet);
+		obj.transform.position = transform.position + transform.up * 10f * Time.deltaTime;
+		obj.GetComponent<Rigidbody2D>().AddForce(transform.up * thrust);
+		Destroy(obj, 3);
 	}
 }
