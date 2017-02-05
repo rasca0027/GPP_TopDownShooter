@@ -17,7 +17,7 @@ public class StraightEnemy : Enemy {
 	}
 
 	void Update () {
-		if (health <= 0)
+		if ((health <= 0) || (transform.position.y <= -6))
 			Destroy (gameObject);
 		move ();
 	}

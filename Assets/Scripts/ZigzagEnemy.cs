@@ -16,11 +16,11 @@ public class ZigzagEnemy : Enemy {
 		moveSpeed = 3f;
 		flag = false;
 		InvokeRepeating ("changeDirection", 0f, 2f); 
-		InvokeRepeating ("Shoot", 0f, 1f);
+		InvokeRepeating ("Shoot", 0f, 2f);
 	}
 
 	void Update() {
-		if (health <= 0)
+		if ((health <= 0) || (transform.position.y <= -6))
 			Destroy (gameObject);
 		move ();
 	}
