@@ -3,13 +3,8 @@ using System.Collections;
 
 public class ZigzagEnemy : Enemy {
 
-	private bool flag;
+	private bool flag;   // flag for moving directions
 
-	public ZigzagEnemy() : base() {
-		
-		// constructor
-		
-	}
 
 	public override void move() {
 		// override
@@ -19,9 +14,8 @@ public class ZigzagEnemy : Enemy {
 	void Start() {
 		health = 1;
 		moveSpeed = 3f;
-		missileType = 1;
 		flag = false;
-		InvokeRepeating ("changeDirection", 0f, 2f);
+		InvokeRepeating ("changeDirection", 0f, 2f); 
 		InvokeRepeating ("Shoot", 0f, 1f);
 	}
 
@@ -31,6 +25,7 @@ public class ZigzagEnemy : Enemy {
 		move ();
 	}
 
+	// change moving direction so it looks like zigzag
 	void changeDirection() {
 		flag = !flag;
 	}

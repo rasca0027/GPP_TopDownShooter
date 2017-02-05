@@ -5,26 +5,24 @@ public class Enemy : MonoBehaviour {
 	
 	public int health;
 	public float moveSpeed;
-	public int missileType;
 	public GameObject missile;
 
-
-	public Enemy() {
-		// constructor
-		Debug.Log ("base class constructor");
-	}
-
-	void OnTriggerEnter2D(Collider2D coll) {
-
-		if (coll.gameObject.tag == "PlayerBullet") {
-			health -= 1;
-		}
-	}
 
 	// not implemented
 	public virtual void move() {}	
 
-	// ways of moving
+
+	// Only player bullet can damage enemy
+	void OnTriggerEnter2D(Collider2D coll) {
+		if (coll.gameObject.tag == "PlayerBullet") {
+			health -= 1;
+		}
+	}
+	
+
+	// Different ways of moving
+
+	// This one makes a zigzag diagonal movement
 	protected void DiagonalMove(bool left) {
 
 		Vector3 pos = transform.position;
@@ -39,19 +37,22 @@ public class Enemy : MonoBehaviour {
 
 	}
 
-	protected void flyIn() {
 
+	// This one makes a straight line fly-in
+	protected void flyIn() {
 		Vector3 pos = transform.position;
 		pos -= transform.up * moveSpeed * Time.deltaTime;
 		transform.position = pos;
-
 	}
+
 
 	// play sounds
 	protected void playSound() {}
 
 
-	// shoots
+	// Different ways of shooting style
+
+	// Only shoots forward
 	protected void shootForward() {
 		GameObject tmp = Instantiate (missile);
 		tmp.transform.position = transform.position - transform.up * 1f;
@@ -60,6 +61,8 @@ public class Enemy : MonoBehaviour {
 		Destroy(tmp, 3);
 	}
 
+
+	// Shoots from two sides
 	protected void shootSides() {
 
 		GameObject left = Instantiate (missile);
@@ -77,5 +80,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 
+	// Shoots like a circle
 	protected void shootCircle() {}
+
 }

@@ -3,17 +3,13 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public float rotSpeed = 180f;
+	// public float rotSpeed = 180f;
 	public float speed = 5f;
 	public GameObject bullet;
 	public float thrust = 400f;
-
-	// Use this for initialization
-	void Start () {
-
-	}
 	
-	// Update is called once per frame
+
+	// Handles player movement
 	void Update () {
 
 		// Rotation
@@ -29,10 +25,11 @@ public class PlayerMovement : MonoBehaviour {
 		Vector3 pos = transform.position;
 		float x = Input.GetAxis ("Horizontal") * speed * Time.deltaTime;
 		float y = Input.GetAxis ("Vertical") * speed * Time.deltaTime;
-		//pos += rot * v;
+		// pos += rot * v;
 		pos += new Vector3 (x, y, 0);
 		transform.position = pos;
 
+		// Press space bar to shoot bullets
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			Shoot();
 		}
