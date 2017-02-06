@@ -46,8 +46,6 @@ public class Enemy : MonoBehaviour {
 	}
 
 
-	// play sounds
-	protected void playSound() {}
 
 
 	// Different ways of shooting style
