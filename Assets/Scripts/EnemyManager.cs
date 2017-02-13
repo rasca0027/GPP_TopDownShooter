@@ -18,10 +18,10 @@ public class EnemyManager : MonoBehaviour {
 	void Start () {
 		enemies = new List<GameObject>();
 		enemiesClass = new List<Enemy>();
-	    waveCount = 1;
+	    waveCount = 0;
 		waveActive = true;
 		created = false;
-		levelDesign = new List<string> {"112211", "222211"};
+		levelDesign = new List<string> {"112211", "22221122"};
 	}
 	
 	// Update is called once per frame
@@ -47,15 +47,20 @@ public class EnemyManager : MonoBehaviour {
 		string level = levelDesign[waveCount];
 		for(int i=0;i<level.Length;i++){
 			GameObject instance;
-			/*
-			if (level[i] == '1') 
+
+			if (level[i] == '1') {
 				instance = Instantiate(enemy1);
-			else
+				StraightEnemy tmp = new StraightEnemy(instance);
+				StartCoroutine("shooting", tmp);
+				enemiesClass.Add(tmp);
+			} else {
 				instance = Instantiate(enemy2);
-				*/
-			instance = Instantiate(enemy1);
-			StraightEnemy tmp = new StraightEnemy(instance);
-			enemiesClass.Add(tmp);
+				ZigzagEnemy tmp = new ZigzagEnemy(instance);
+				StartCoroutine("changeDirection", tmp);
+				StartCoroutine("shooting", tmp);
+				enemiesClass.Add(tmp);
+			}
+
 			instance.transform.position = GameObject.Find ("Anchor").transform.position;
 			enemies.Add(instance);
 			yield return new WaitForSeconds(3);
@@ -76,6 +81,26 @@ public class EnemyManager : MonoBehaviour {
 		waveActive = false;
 		waveCount += 1;
 		created = false;
+		Invoke ("startNewWave", 5f);
+	}
+
+	IEnumerator changeDirection(ZigzagEnemy tmp) {
+		for (int i=0; i<=5;i++) {
+			tmp.changeDirection();
+			yield return new WaitForSeconds(2);
+		}
 
 	}
+
+	private void startNewWave() {
+		waveActive = true;
+	}
+
+	IEnumerator shooting(Enemy tmp) {
+		for (int i=0; i<=10;i++) {
+			tmp.Shoot();
+			yield return new WaitForSeconds(0.8f);
+		}
+	}
+
 }

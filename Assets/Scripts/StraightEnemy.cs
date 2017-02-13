@@ -14,6 +14,7 @@ public class StraightEnemy : Enemy {
 		moveSpeed = 3f;
 		isAlive = true;
 		//InvokeRepeating ("Shoot", 0f, 0.6f);
+		missile = (GameObject)Resources.Load("Missile1", typeof(GameObject));
 
 	}
 
@@ -22,7 +23,7 @@ public class StraightEnemy : Enemy {
 			isAlive = false;
 	}
 
-	void Shoot() {
+	public override void Shoot() {
 		shootSides ();
 	}
 

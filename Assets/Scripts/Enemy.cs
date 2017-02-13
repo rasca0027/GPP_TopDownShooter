@@ -16,6 +16,7 @@ public class Enemy {
 	// not implemented
 	public virtual void move() {}	
 
+	public virtual void Shoot() {}
 
 	// Only player bullet can damage enemy
 	void OnTriggerEnter2D(Collider2D coll) {
