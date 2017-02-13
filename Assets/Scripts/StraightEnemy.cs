@@ -9,17 +9,17 @@ public class StraightEnemy : Enemy {
 		flyIn ();
 	}
 
-	void Start() {
-		health = 2;
+	public StraightEnemy(GameObject ship):base(ship) {
+		health = 20;
 		moveSpeed = 3f;
-		InvokeRepeating ("Shoot", 0f, 0.6f);
+		isAlive = true;
+		//InvokeRepeating ("Shoot", 0f, 0.6f);
 
 	}
 
 	void Update () {
-		if ((health <= 0) || (transform.position.y <= -6))
-			Destroy (gameObject);
-		move ();
+		if ((health <= 0) || (ship.transform.position.y <= -8))
+			isAlive = false;
 	}
 
 	void Shoot() {

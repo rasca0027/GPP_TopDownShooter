@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour {
+public class Enemy {
 	
 	public int health;
 	public float moveSpeed;
 	public GameObject missile;
+	public bool isAlive;
+	public GameObject ship;
 
+	public Enemy(GameObject obj) {
+		ship = obj;
+	}
 
 	// not implemented
 	public virtual void move() {}	
@@ -25,7 +30,7 @@ public class Enemy : MonoBehaviour {
 	// This one makes a zigzag diagonal movement
 	protected void DiagonalMove(bool left) {
 
-		Vector3 pos = transform.position;
+		Vector3 pos = ship.transform.position;
 		Vector3 direction;
 		if (left) {
 			direction = (Vector3.up + Vector3.right).normalized * moveSpeed * Time.deltaTime;
@@ -33,16 +38,16 @@ public class Enemy : MonoBehaviour {
 			direction = (Vector3.up - Vector3.right).normalized * moveSpeed * Time.deltaTime;
 		}
 		pos -= direction;
-		transform.position = pos;
+		ship.transform.position = pos;
 
 	}
 
 
 	// This one makes a straight line fly-in
 	protected void flyIn() {
-		Vector3 pos = transform.position;
-		pos -= transform.up * moveSpeed * Time.deltaTime;
-		transform.position = pos;
+		Vector3 pos = ship.transform.position;
+		pos -= ship.transform.up * moveSpeed * Time.deltaTime;
+		ship.transform.position = pos;
 	}
 
 
@@ -52,28 +57,28 @@ public class Enemy : MonoBehaviour {
 
 	// Only shoots forward
 	protected void shootForward() {
-		GameObject tmp = Instantiate (missile);
-		tmp.transform.position = transform.position - transform.up * 1f;
+		GameObject tmp = GameObject.Instantiate (missile);
+		tmp.transform.position = ship.transform.position - ship.transform.up * 1f;
 		tmp.transform.rotation = Quaternion.Euler (0, 0, -180);
 		tmp.GetComponent<Rigidbody2D>().AddForce(tmp.transform.up * 400f);
-		Destroy(tmp, 3);
+		GameObject.Destroy(tmp, 3);
 	}
 
 
 	// Shoots from two sides
 	protected void shootSides() {
 
-		GameObject left = Instantiate (missile);
-		left.transform.position = transform.position - transform.right * 1f;
+		GameObject left = GameObject.Instantiate (missile);
+		left.transform.position = ship.transform.position - ship.transform.right * 1f;
 		left.transform.rotation = Quaternion.Euler (0, 0, 135);
 		left.GetComponent<Rigidbody2D>().AddForce(left.transform.up * 400f);
-		Destroy(left, 3);
+		GameObject.Destroy(left, 3);
 
-		GameObject right = Instantiate (missile);
-		right.transform.position = transform.position + transform.right * 1f;
+		GameObject right = GameObject.Instantiate (missile);
+		right.transform.position = ship.transform.position + ship.transform.right * 1f;
 		right.transform.rotation = Quaternion.Euler (0, 0, -135);
 		right.GetComponent<Rigidbody2D>().AddForce(right.transform.up * 400f);
-		Destroy(right, 3);
+		GameObject.Destroy(right, 3);
 
 	}
 
