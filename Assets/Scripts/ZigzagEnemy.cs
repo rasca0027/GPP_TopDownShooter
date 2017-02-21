@@ -8,6 +8,8 @@ public class ZigzagEnemy : Enemy {
 	public override void move() {
 		// override
 		DiagonalMove (flag);
+		if ((health <= 0) || (ship.transform.position.y <= -8))
+			isAlive = false;
 	}
 
 	public ZigzagEnemy(GameObject ship) : base(ship) {
@@ -20,13 +22,9 @@ public class ZigzagEnemy : Enemy {
 		missile = (GameObject)Resources.Load("Missile2", typeof(GameObject));
 	}
 
-	void Update() {
-		if ((health <= 0) || (ship.transform.position.y <= -6))
-			isAlive = false;
-	}
 
 	public void changeDirection() {	
-		Debug.Log("change Direction");
+		//Debug.Log("change Direction");
 		flag = !flag;
 	}
 

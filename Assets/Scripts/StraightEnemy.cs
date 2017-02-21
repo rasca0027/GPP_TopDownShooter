@@ -7,6 +7,8 @@ public class StraightEnemy : Enemy {
 	public override void move() {
 		// override
 		flyIn ();
+		if ((health <= 0) || (ship.transform.position.y <= -8))
+			isAlive = false;
 	}
 
 	public StraightEnemy(GameObject ship):base(ship) {
@@ -16,11 +18,6 @@ public class StraightEnemy : Enemy {
 		//InvokeRepeating ("Shoot", 0f, 0.6f);
 		missile = (GameObject)Resources.Load("Missile1", typeof(GameObject));
 
-	}
-
-	void Update () {
-		if ((health <= 0) || (ship.transform.position.y <= -8))
-			isAlive = false;
 	}
 
 	public override void Shoot() {

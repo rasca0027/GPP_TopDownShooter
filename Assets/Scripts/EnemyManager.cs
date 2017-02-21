@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour {
 
-	public GameObject enemy1;
-	public GameObject enemy2;
+	public GameObject enemy1, enemy2, enemy3;
 	private List<GameObject> enemies;
 	private List<Enemy> enemiesClass;
+	private List<Enemy> toDestroy;
     private int waveCount;
 	private bool waveActive;
 	private bool created;
@@ -18,24 +18,37 @@ public class EnemyManager : MonoBehaviour {
 	void Start () {
 		enemies = new List<GameObject>();
 		enemiesClass = new List<Enemy>();
+		toDestroy = new List<Enemy>();
 	    waveCount = 0;
 		waveActive = true;
 		created = false;
-		levelDesign = new List<string> {"112211", "22221122"};
+		levelDesign = new List<string> {"132211", "22221122"};
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		waveController();
-
-		for (int i=enemies.Count-1;i>=0;--i) {
+		//Debug.Log(enemiesClass);
+		//enemiesClass
+		for (int i=enemiesClass.Count-1;i>=0;--i) {
+			// update every enemy
 			Enemy enemy = enemiesClass[i];
-			enemy.move ();
 
 			if (!enemy.isAlive){
-				enemies.RemoveAt(i);
-				Destroy(enemy.ship, 0.5f);
+				//Debug.Log(enemy.ship);
+				Debug.Log ("enemy dies");
+				toDestroy.Add(enemy);
+				enemiesClass.RemoveAt(i);
+			} else {
+				enemy.move ();
+			}
+		}
+
+		// delete queue
+		foreach (Enemy e in toDestroy) {
+			if (e.done) {
+				Destroy(e.ship);
 			}
 		}
 
@@ -53,12 +66,18 @@ public class EnemyManager : MonoBehaviour {
 				StraightEnemy tmp = new StraightEnemy(instance);
 				StartCoroutine("shooting", tmp);
 				enemiesClass.Add(tmp);
-			} else {
+			} else if (level[i] == '2') {
 				instance = Instantiate(enemy2);
 				ZigzagEnemy tmp = new ZigzagEnemy(instance);
 				StartCoroutine("changeDirection", tmp);
 				StartCoroutine("shooting", tmp);
 				enemiesClass.Add(tmp);
+			} else {
+				instance = Instantiate(enemy3);
+				AccelarateEnemy tmp = new AccelarateEnemy(instance);
+				StartCoroutine("shooting", tmp);
+				enemiesClass.Add(tmp);
+
 			}
 
 			instance.transform.position = GameObject.Find ("Anchor").transform.position;
@@ -86,10 +105,12 @@ public class EnemyManager : MonoBehaviour {
 
 	IEnumerator changeDirection(ZigzagEnemy tmp) {
 		for (int i=0; i<=5;i++) {
+			tmp.done = false;
+
 			tmp.changeDirection();
 			yield return new WaitForSeconds(2);
 		}
-
+		tmp.done = true;
 	}
 
 	private void startNewWave() {
@@ -98,9 +119,11 @@ public class EnemyManager : MonoBehaviour {
 
 	IEnumerator shooting(Enemy tmp) {
 		for (int i=0; i<=10;i++) {
+			tmp.done = false;
 			tmp.Shoot();
 			yield return new WaitForSeconds(0.8f);
 		}
+		tmp.done = true;
 	}
 
 }
