@@ -7,8 +7,11 @@ public class BulletController : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		Debug.Log("triiger somethign");
-		if (coll.gameObject.tag != "Player")
-			Destroy (coll.gameObject);
+		if (coll.gameObject.tag != "Player") {
+		    Destroy(gameObject);
+		    EnemyDieEvent newevent = new EnemyDieEvent(coll.gameObject);	
+		    GameObject.Find("GameManager").GetComponent<EventManager>().NotifyEventSystem(newevent);
+		    Debug.Log ("enemy killed event sent");
+                }
 	}
 }

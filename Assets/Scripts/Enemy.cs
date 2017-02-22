@@ -8,11 +8,9 @@ public class Enemy {
 	public GameObject missile;
 	public bool isAlive;
 	public GameObject ship;
-	public bool done;
 
 	public Enemy(GameObject obj) {
 		ship = obj;
-		done = false;
 	}
 
 	// not implemented

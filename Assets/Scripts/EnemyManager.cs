@@ -23,6 +23,25 @@ public class EnemyManager : MonoBehaviour {
 		waveActive = true;
 		created = false;
 		levelDesign = new List<string> {"132211", "22221122"};
+	
+	        // create delegate
+	        EventManager.Handler EnemyDieHandler = new EventManager.Handler(dieHandler);
+	        // register handler
+	        System.Type t = typeof(EnemyDieEvent);
+	        EventManager.Register(t, EnemyDieHandler); 
+	
+	}
+
+	void dieHandler(Event inputEvent) {
+	    Debug.Log("handler called!");
+
+	    EnemyDieEvent e = (EnemyDieEvent)inputEvent;
+            foreach (Enemy enemy in enemiesClass) {
+                if (enemy.ship == e.enemyObj) {
+                    enemy.isAlive = false;
+                }
+            }
+
 	}
 	
 	// Update is called once per frame
@@ -47,9 +66,8 @@ public class EnemyManager : MonoBehaviour {
 
 		// delete queue
 		foreach (Enemy e in toDestroy) {
-			if (e.done) {
-				Destroy(e.ship);
-			}
+		    StopCoroutine("shooting");
+		    Destroy(e.ship);
 		}
 
 	
@@ -105,12 +123,9 @@ public class EnemyManager : MonoBehaviour {
 
 	IEnumerator changeDirection(ZigzagEnemy tmp) {
 		for (int i=0; i<=5;i++) {
-			tmp.done = false;
-
 			tmp.changeDirection();
 			yield return new WaitForSeconds(2);
 		}
-		tmp.done = true;
 	}
 
 	private void startNewWave() {
@@ -119,11 +134,9 @@ public class EnemyManager : MonoBehaviour {
 
 	IEnumerator shooting(Enemy tmp) {
 		for (int i=0; i<=10;i++) {
-			tmp.done = false;
 			tmp.Shoot();
 			yield return new WaitForSeconds(0.8f);
 		}
-		tmp.done = true;
 	}
 
 }

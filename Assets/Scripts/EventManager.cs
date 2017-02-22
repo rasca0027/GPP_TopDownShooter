@@ -8,10 +8,10 @@ public abstract class Event {
 
 public class EnemyDieEvent : Event {
 
-    public GameObject enemy;
+    public GameObject enemyObj;
 
     public EnemyDieEvent(GameObject diedEnemy) {
-        enemy = diedEnemy;
+        enemyObj = diedEnemy;
     }
 
 }
@@ -22,10 +22,12 @@ public class EventManager : MonoBehaviour {
 
     public delegate void Handler(Event e);
     
-    private Dictionary<System.Type, Handler> handlerTable = new Dictionary<System.Type, Handler>();
+    private static Dictionary<System.Type, Handler> handlerTable = new Dictionary<System.Type, Handler>();
     
-    public void Register(System.Type type, Handler handler) {
-        
+    public static void Register(System.Type type, Handler handler) {
+
+        Debug.Log("registered");
+
         if (handlerTable.ContainsKey(type)) {
             handlerTable[type] += handler;
         } else {
@@ -34,7 +36,7 @@ public class EventManager : MonoBehaviour {
     
     }
 
-    public void Unregister(System.Type type, Handler handler) {
+    public static void Unregister(System.Type type, Handler handler) {
         
         if (handlerTable.ContainsKey(type)) {
             // remove from dictionary 
@@ -47,15 +49,15 @@ public class EventManager : MonoBehaviour {
 
     public void NotifyEventSystem(Event e) {
 
-        //System.Type t = typeof(e);
-		System.Type t = e.GetType();
+	System.Type t = e.GetType();
+        Debug.Log("Notified, ");
+
         // when someone notifys EventSystem that something happens
-		/*
-        foreach (Handler h in handlerTable[t]) {
-            h(e);
-        }
-        */
-		Debug.Log ("notified");
+	Handler handlers;
+	if (handlerTable.TryGetValue(t, out handlers)) {
+	    handlers(e);
+	}
+        
 
     }
     
