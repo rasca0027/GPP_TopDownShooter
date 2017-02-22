@@ -22,8 +22,18 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
+	public void DamagePlayer() {
 		health -= 1;
+		OnHealthDecrease();
+	}
+
+	void OnCollisionEnter2D(Collision2D coll) {
+		// Enemy or enemybullets hit
+		health -= 1;
+		OnHealthDecrease();
+	}
+
+	void OnHealthDecrease() {
 		StartCoroutine(Flash(0.3f, 1));
 	}
 
@@ -41,7 +51,7 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void die() {
-		Debug.Log ("die");
-		Destroy (gameObject);
+		Debug.Log ("Player die");
+		Destroy (gameObject, 0.5f);
 	}
 }

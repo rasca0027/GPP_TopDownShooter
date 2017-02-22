@@ -4,8 +4,11 @@ using System.Collections;
 public class BulletController : MonoBehaviour {
 
 	// Player's bullet will not harm myself
-	void OnCollisionEnter2D(Collision2D coll) {
+
+
+	void OnTriggerEnter2D(Collider2D coll) {
+		Debug.Log("triiger somethign");
 		if (coll.gameObject.tag != "Player")
-			Destroy (gameObject);
+			Destroy (coll.gameObject);
 	}
 }
