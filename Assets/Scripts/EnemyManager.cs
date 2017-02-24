@@ -100,7 +100,7 @@ public class EnemyManager : MonoBehaviour {
 
 			instance.transform.position = GameObject.Find ("Anchor").transform.position;
 			enemies.Add(instance);
-			yield return new WaitForSeconds(3);
+			yield return new WaitForSeconds(2);
 		}
 		endWave();
 	}

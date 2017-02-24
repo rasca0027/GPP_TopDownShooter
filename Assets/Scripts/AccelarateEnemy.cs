@@ -15,8 +15,19 @@ public class AccelarateEnemy : Enemy {
         moveSpeed = 2f;
         isAlive = true;
 	missile = (GameObject)Resources.Load("Missile2", typeof(GameObject));
-        // get eventSystem and register for handler
         
+        
+        // get eventSystem and register for handler
+
+        // register handler
+        EventManager.Handler StraightDieHandler = new EventManager.Handler(handler);
+        System.Type t = typeof(StraightEnemyEvent);
+        EventManager.Register(t, StraightDieHandler);
+    }
+
+    public void handler(Event inputEvent) {
+        Debug.Log("Hanlder called, Accelerate");
+        moveSpeed = 10f; // accelerate           
     }
 
     public override void Shoot() {
