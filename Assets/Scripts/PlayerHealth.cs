@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour {
 
-	public int health = 3;
+	public int health = 4;
 	SpriteRenderer sp;
 
 	// Use this for initialization

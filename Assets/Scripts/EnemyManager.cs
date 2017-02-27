@@ -11,7 +11,7 @@ public class EnemyManager : MonoBehaviour {
     private int waveCount;
 	private bool waveActive;
 	private bool created;
-	private List<string> levelDesign;
+	private List<List<string>> levelDesign;
 
 
     // Use this for initialization
@@ -22,7 +22,10 @@ public class EnemyManager : MonoBehaviour {
 	    waveCount = 0;
 		waveActive = true;
 		created = false;
-		levelDesign = new List<string> {"132211", "22221122"};
+		levelDesign = new List<List<string>> { 
+		    new List<string> {"13", "2", "2"}, 
+		    new List<string> {"22", "1", "3"} 
+		};
 	
 	        // create delegate
 	        EventManager.Handler EnemyDieHandler = new EventManager.Handler(dieHandler);
@@ -75,33 +78,45 @@ public class EnemyManager : MonoBehaviour {
 
 	IEnumerator createEnemy() {
 
-		string level = levelDesign[waveCount];
-		for(int i=0;i<level.Length;i++){
-			GameObject instance;
+		List<string> level = levelDesign[waveCount];
+		for(int i=0;i<level.Count;i++) {
+		// in this wave	
+		    for (int j=0;j<level[i].Length;j++) {
+                    // level[i] = "12"
+                            GameObject instance;
 
-			if (level[i] == '1') {
-				instance = Instantiate(enemy1);
-				StraightEnemy tmp = new StraightEnemy(instance);
-				StartCoroutine("shooting", tmp);
-				enemiesClass.Add(tmp);
-			} else if (level[i] == '2') {
-				instance = Instantiate(enemy2);
-				ZigzagEnemy tmp = new ZigzagEnemy(instance);
-				StartCoroutine("changeDirection", tmp);
-				StartCoroutine("shooting", tmp);
-				enemiesClass.Add(tmp);
-			} else {
-				instance = Instantiate(enemy3);
-				AccelarateEnemy tmp = new AccelarateEnemy(instance);
-				StartCoroutine("shooting", tmp);
-				enemiesClass.Add(tmp);
+                            if (level[i][j] == '1') {
+                                    instance = Instantiate(enemy1);
+                                    StraightEnemy tmp = new StraightEnemy(instance);
+                                    StartCoroutine("shooting", tmp);
+                                    enemiesClass.Add(tmp);
+                            } else if (level[i][j] == '2') {
+                                    instance = Instantiate(enemy2);
+                                    ZigzagEnemy tmp = new ZigzagEnemy(instance);
+                                    StartCoroutine("changeDirection", tmp);
+                                    StartCoroutine("shooting", tmp);
+                                    enemiesClass.Add(tmp);
+                            } else {
+                                    instance = Instantiate(enemy3);
+                                    AccelarateEnemy tmp = new AccelarateEnemy(instance);
+                                    StartCoroutine("shooting", tmp);
+                                    enemiesClass.Add(tmp);
+                            }
 
-			}
+                            if (level[i].Length == 1) {
+                                instance.transform.position = GameObject.Find ("Anchor").transform.position;
+                            } else {
+                                if (j == 0) 
+                                    instance.transform.position = GameObject.Find ("AnchorLeft").transform.position;
+                                else
+                                    instance.transform.position = GameObject.Find ("AnchorRight").transform.position;
+                            }
+                            enemies.Add(instance);   
+                    } // end for j
 
-			instance.transform.position = GameObject.Find ("Anchor").transform.position;
-			enemies.Add(instance);
-			yield return new WaitForSeconds(2);
-		}
+		    yield return new WaitForSeconds(2);
+		} // end for i
+
 		endWave();
 	}
 

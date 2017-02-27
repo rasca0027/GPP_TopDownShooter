@@ -27,7 +27,7 @@ public class AccelarateEnemy : Enemy {
 
     public void handler(Event inputEvent) {
         Debug.Log("Hanlder called, Accelerate");
-        moveSpeed = 10f; // accelerate           
+        moveSpeed = 8f; // accelerate           
     }
 
     public override void Shoot() {
