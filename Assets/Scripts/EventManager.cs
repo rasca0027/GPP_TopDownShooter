@@ -35,7 +35,6 @@ public class EventManager : MonoBehaviour {
     public void NotifyEventSystem(Event e) {
 
 	System.Type t = e.GetType();
-        Debug.Log("Notified, " + t);
 
         // when someone notifys EventSystem that something happens
 	Handler handlers;
