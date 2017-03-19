@@ -97,39 +97,84 @@ public class Task {
 
 
 public class AppearTask : Task {
+	
+	GameObject b;
+	Enemy e;
 
-    public AppearTask() {
-         
+    public AppearTask(Enemy bossClass) {
+		b = bossClass.ship;
+		e = bossClass;
     }
 
-    protected override void Init() {
-        // Init prefab
+    protected override void Init() { 
         // location
+        b.transform.position = GameObject.Find("Anchor").transform.position;
 
     }
 
     public override void Update() {
+		if (!e.isAlive)
+			SetStatus(TaskStatus.Fail);
         // Boss slowly moves into ground
+		if (b.transform.position.y >= 2.4f) {
+			b.transform.position += b.transform.up * Time.deltaTime;
+		} else {
+			// end task
+			SetStatus(TaskStatus.Success);
+		}
     }
+
+	protected override void OnSuccess() {
+
+	}
+
+	protected override void OnFail() {
+		GameObject.Destroy(b);
+	}
 
 }
 
 public class ShiftAndWaitTask : Task {
 
-    public ShiftAndWaitTask() {
-         
+	GameObject b;
+	Enemy e;
+	bool direction;
+
+    public ShiftAndWaitTask(Enemy bossClass) {
+		e = bossClass;
+		b = e.ship;
+		direction = false;
     }
 
     protected override void Init() {
-        // Init prefab
-        // location
+		// register event handler
+
 
     }
 
     public override void Update() {
+
+		if (!e.isAlive)
+			SetStatus(TaskStatus.Fail);
+
+
         // Boss will move left and right
         // and shoot bullet
-        // Until other enemy die
+        // until player hit it twice
+		if (direction) {
+			b.transform.position -= b.transform.right * Time.deltaTime;
+			if (b.transform.position.x >= 3f)
+				direction = !direction;
+		} else {
+			b.transform.position += b.transform.right * Time.deltaTime;
+			if (b.transform.position.x <= -3f)
+				direction = !direction;
+		}
+
+		if (e.health <= 6) {
+			SetStatus(TaskStatus.Success);
+		}
+
     }
 
 }
@@ -137,18 +182,28 @@ public class ShiftAndWaitTask : Task {
 
 public class LargerTask : Task {
 
-    public LargerTask() {
-         
+	GameObject b;
+	Enemy e;
+
+    public LargerTask(Enemy bossClass) {
+		b = bossClass.ship;
+		e = bossClass;
     }
 
     protected override void Init() {
         // Other enemy dies
+		b.transform.localScale += new Vector3(0.2f, 0.2f, 0f);
     }
 
     public override void Update() {
         // Boss will become larger
         // and shoot fire
         // Until he dies
+		if (!e.isAlive)
+			SetStatus(TaskStatus.Success);
+
+
+
     }
 
 }  

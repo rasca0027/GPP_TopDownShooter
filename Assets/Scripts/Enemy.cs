@@ -18,13 +18,6 @@ public class Enemy {
 
 	public virtual void Shoot() {}
 
-	// Only player bullet can damage enemy
-	void OnTriggerEnter2D(Collider2D coll) {
-		if (coll.gameObject.tag == "PlayerBullet") {
-			health -= 1;
-		}
-	}
-	
 
 	// Different ways of moving
 
@@ -60,6 +53,14 @@ public class Enemy {
 	protected void shootForward() {
 		GameObject tmp = GameObject.Instantiate (missile);
 		tmp.transform.position = ship.transform.position - ship.transform.up * 1f;
+		tmp.transform.rotation = Quaternion.Euler (0, 0, -180);
+		tmp.GetComponent<Rigidbody2D>().AddForce(tmp.transform.up * 400f);
+		GameObject.Destroy(tmp, 3);
+	}
+
+	protected void BossShoot() {
+		GameObject tmp = GameObject.Instantiate (missile);
+		tmp.transform.position = ship.transform.position + ship.transform.up * 2f;
 		tmp.transform.rotation = Quaternion.Euler (0, 0, -180);
 		tmp.GetComponent<Rigidbody2D>().AddForce(tmp.transform.up * 400f);
 		GameObject.Destroy(tmp, 3);

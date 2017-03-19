@@ -5,9 +5,9 @@ public class AccelarateEnemy : Enemy {
 
     public override void move() {
         flyIn();
-        if (health <= 0) {
-           Debug.Log("I'm dead trigger sometihng.....");
-        }
+		if ((health <= 0) || (ship.transform.position.y <= -8)) {
+			isAlive = false;
+		}
     }
 
     public AccelarateEnemy(GameObject ship) : base(ship) {

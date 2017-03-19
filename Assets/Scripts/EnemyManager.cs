@@ -50,6 +50,14 @@ public class EnemyManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		// end of  waves
+		if ((enemiesClass.Count == 0) && (waveCount == levelDesign.Count)) {
+			Debug.Log ("wave end");
+			WaveClearEvent wEvent = new WaveClearEvent();
+			GameObject.Find("GameManager").GetComponent<EventManager>().NotifyEventSystem(wEvent);
+			waveCount += 1;
+		}
+
 		waveController();
 		//Debug.Log(enemiesClass);
 		//enemiesClass
@@ -72,6 +80,7 @@ public class EnemyManager : MonoBehaviour {
 		    StopCoroutine("shooting");
 		    Destroy(e.ship);
 		}
+
 
 	
 	}
@@ -122,7 +131,7 @@ public class EnemyManager : MonoBehaviour {
 
 	private void waveController() {
 
-		if (waveActive && !created) {
+		if (waveActive && !created && (waveCount <= levelDesign.Count - 1)) {
 			// create 1 enemy every 3 secs
 			StartCoroutine("createEnemy");
 			created = true;

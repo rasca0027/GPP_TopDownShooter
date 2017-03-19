@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour {
 
-	public int health = 4;
+	public int health = 20;
 	SpriteRenderer sp;
 
 	// Use this for initialization
@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour {
 			// die
 			StartCoroutine(Flash(0.3f, 3));
 		}
+
 	}
 
 	public void DamagePlayer() {

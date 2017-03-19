@@ -13,7 +13,7 @@ public class StraightEnemy : Enemy {
 	}
 
 	public StraightEnemy(GameObject ship):base(ship) {
-		health = 20;
+		health = 2;
 		moveSpeed = 2f;
 		isAlive = true;
 		//InvokeRepeating ("Shoot", 0f, 0.6f);

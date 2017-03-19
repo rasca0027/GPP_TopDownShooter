@@ -26,4 +26,15 @@ public class StraightEnemyEvent : Event {
 
 }
 
+public class WaveClearEvent : Event {
+	
+	public GameObject enemyObj;
+	
+	public WaveClearEvent() {
+
+	}
+	
+}
+
+
 
