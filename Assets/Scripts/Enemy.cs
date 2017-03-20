@@ -86,6 +86,24 @@ public class Enemy {
 
 
 	// Shoots like a circle
-	protected void shootCircle() {}
+	protected void shootCircle() {
+		GameObject tmp = GameObject.Instantiate (missile);
+		tmp.transform.position = ship.transform.position + ship.transform.up * 2f;
+		tmp.transform.rotation = Quaternion.Euler (0, 0, -180);
+		tmp.GetComponent<Rigidbody2D>().AddForce(tmp.transform.up * 400f);
+		GameObject.Destroy(tmp, 3);
+		GameObject tmp2 = GameObject.Instantiate (missile);
+		tmp2.transform.position = ship.transform.position + ship.transform.up * 2f + ship.transform.right;
+		tmp2.transform.rotation = Quaternion.Euler (0, 0, -180);
+		tmp2.GetComponent<Rigidbody2D>().AddForce(tmp2.transform.up * 400f);
+		GameObject.Destroy(tmp2, 3);
+                GameObject tmp3 = GameObject.Instantiate (missile);
+		tmp3.transform.position = ship.transform.position + ship.transform.up * 2f - ship.transform.right;
+		tmp3.transform.rotation = Quaternion.Euler (0, 0, -180);
+		tmp3.GetComponent<Rigidbody2D>().AddForce(tmp3.transform.up * 400f);
+		GameObject.Destroy(tmp3, 3);
+
+	
+	}
 
 }

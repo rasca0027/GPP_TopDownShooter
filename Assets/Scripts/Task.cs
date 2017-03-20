@@ -176,6 +176,14 @@ public class ShiftAndWaitTask : Task {
 		}
 
     }
+    protected override void OnSuccess() {
+
+    }
+
+    protected override void OnFail() {
+		GameObject.Destroy(b);
+    }
+
 
 }
 
@@ -183,9 +191,9 @@ public class ShiftAndWaitTask : Task {
 public class LargerTask : Task {
 
 	GameObject b;
-	Enemy e;
+	BossEnemy e;
 
-    public LargerTask(Enemy bossClass) {
+    public LargerTask(BossEnemy bossClass) {
 		b = bossClass.ship;
 		e = bossClass;
     }
@@ -193,17 +201,27 @@ public class LargerTask : Task {
     protected override void Init() {
         // Other enemy dies
 		b.transform.localScale += new Vector3(0.2f, 0.2f, 0f);
+		e.missile = (GameObject)Resources.Load("greenBullet", typeof(GameObject));
+                e.isPhase3 = true;
     }
 
     public override void Update() {
         // Boss will become larger
-        // and shoot fire
+        // and shoot green bullets
         // Until he dies
 		if (!e.isAlive)
 			SetStatus(TaskStatus.Success);
-
-
-
+		//float playerX = GameObject.FindGameObjectWithTag("Player").transform.position.x;
+                //b.transform.position = new Vector3(playerX, b.transform.position.y, b.transform.position.z);
     }
+    protected override void OnSuccess() {
+        GameObject.Destroy(b);
+        Debug.Log("On success");
+    }
+
+    protected override void OnFail() {
+	    GameObject.Destroy(b);
+    }
+
 
 }  
