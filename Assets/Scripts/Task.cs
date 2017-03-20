@@ -192,10 +192,12 @@ public class LargerTask : Task {
 
 	GameObject b;
 	BossEnemy e;
+	bool direction;
 
     public LargerTask(BossEnemy bossClass) {
 		b = bossClass.ship;
 		e = bossClass;
+		direction = false;
     }
 
     protected override void Init() {
@@ -213,6 +215,17 @@ public class LargerTask : Task {
 			SetStatus(TaskStatus.Success);
 		//float playerX = GameObject.FindGameObjectWithTag("Player").transform.position.x;
                 //b.transform.position = new Vector3(playerX, b.transform.position.y, b.transform.position.z);
+                if (direction) {
+                    b.transform.position -= b.transform.right * Time.deltaTime;
+                    if (b.transform.position.x >= 3f)
+                            direction = !direction;
+		} else {
+                    b.transform.position += b.transform.right * Time.deltaTime;
+                    if (b.transform.position.x <= -3f)
+                            direction = !direction;
+		}
+
+
     }
     protected override void OnSuccess() {
         GameObject.Destroy(b);
