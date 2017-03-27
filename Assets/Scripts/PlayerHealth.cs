@@ -19,7 +19,6 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
         public void handler(Event inputEvent) {
-        	Debug.Log("Hanlder called, add score");
         	// add score
 		if (!bonus)
 			score += 10;

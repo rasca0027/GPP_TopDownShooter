@@ -36,7 +36,6 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	void dieHandler(Event inputEvent) {
-	    Debug.Log("handler called!");
 
 	    EnemyDieEvent e = (EnemyDieEvent)inputEvent;
             foreach (Enemy enemy in enemiesClass) {
@@ -67,7 +66,6 @@ public class EnemyManager : MonoBehaviour {
 
 			if (!enemy.isAlive){
 				//Debug.Log(enemy.ship);
-				Debug.Log ("enemy dies");
 				toDestroy.Add(enemy);
 				enemiesClass.RemoveAt(i);
 			} else {

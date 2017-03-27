@@ -26,7 +26,6 @@ public class AccelarateEnemy : Enemy {
     }
 
     public void handler(Event inputEvent) {
-        Debug.Log("Hanlder called, Accelerate");
         moveSpeed = 8f; // accelerate           
     }
 

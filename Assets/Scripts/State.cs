@@ -38,7 +38,6 @@ public class NormalState : State {
     }
     
     public void h(Event inputEvent) {
-        Debug.Log("two shot handler");
         TransitionTo(new BonusState());
     }
 
