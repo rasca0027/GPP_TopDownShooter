@@ -36,5 +36,9 @@ public class WaveClearEvent : Event {
 	
 }
 
+public class TwoShotEvent : Event {
 
+    
+
+}
 

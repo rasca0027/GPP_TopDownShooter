@@ -4,15 +4,29 @@ using System.Collections;
 public class PlayerHealth : MonoBehaviour {
 
 	public int health = 20;
-	SpriteRenderer sp;
+	public int score = 0;
+	private SpriteRenderer sp;
+	private bool bonus = false;
 
 	// Use this for initialization
 	void Start () {
 		sp = GetComponent<SpriteRenderer>();
-
-
-	}
+		// register handler
+        	EventManager.Handler ScoreHandler = new EventManager.Handler(handler);
+        	System.Type t = typeof(EnemyDieEvent);
+        	EventManager.Register(t, ScoreHandler);
 	
+	}
+
+        public void handler(Event inputEvent) {
+        	Debug.Log("Hanlder called, add score");
+        	// add score
+		if (!bonus)
+			score += 10;
+		else
+			score += 20;           
+    	} 
+
 	// Update is called once per frame
 	void Update () {
 		// check life
@@ -38,7 +52,9 @@ public class PlayerHealth : MonoBehaviour {
 		StartCoroutine(Flash(0.3f, 1));
 	}
 
-	
+	public void SetBonus(bool state) {
+		bonus = state;
+	}
 	IEnumerator Flash(float x, int times) {
 		
 		for (int i = 0; i < times; i++) {

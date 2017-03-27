@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FSM : MonoBehaviour {
+public class FSM {
 
     // We keep track of the state machine's current state and expose it through a public
     // property in case someone needs to query it.
@@ -10,10 +10,6 @@ public class FSM : MonoBehaviour {
     // We don't want to change the current state in the middle of an update, so when a transition is called
     private State _pendingState;
 
-    void Start() 
-    {
-        TransitionTo(new NormalState());
-    }
 
     public void Update()
     {

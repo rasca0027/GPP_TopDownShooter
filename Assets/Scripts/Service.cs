@@ -3,6 +3,6 @@ using System.Collections;
 
 public static class Service  {
     
-    public static FSM fsm;
+    public static FSM fsm = new FSM();
 
 }

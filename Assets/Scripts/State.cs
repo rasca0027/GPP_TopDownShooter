@@ -25,8 +25,21 @@ public abstract class State {
 
 public class NormalState : State {
 
+    System.Type t;
+    EventManager.Handler TwoShotHandler;
+    
     public override void OnEnter() {
         Debug.Log("in normal state!");
+        // register
+        t = typeof(TwoShotEvent);
+        TwoShotHandler = new EventManager.Handler(h);
+        EventManager.Register(t, TwoShotHandler);
+    
+    }
+    
+    public void h(Event inputEvent) {
+        Debug.Log("two shot handler");
+        TransitionTo(new BonusState());
     }
 
     public override void Update() {
@@ -38,33 +51,86 @@ public class NormalState : State {
         
     }
 
+    public override void OnExit() {
+        EventManager.Unregister(t, TwoShotHandler);
+    }
 
 }
 
 public class BonusState : State {
 
+    float timer = 0;
+    float timeToWait = 5f;
+    Color defaultColor;
+    float duration = 3f;
+
     public override void OnEnter() {
         Debug.Log("in bonus state!");
+        GameObject.Find("Player").GetComponent<PlayerHealth>().SetBonus(true);
+        defaultColor = Camera.main.backgroundColor;
+        float t = Mathf.PingPong(Time.time, duration) / duration;
+        Camera.main.backgroundColor = Color.Lerp(Color.red, Color.blue, t);
     }
 
+   
     public override void Update() {
-        // change background or add effects
+        // change background or add effects   
         // twice score
         // after 5 seconds go back to normal state
+        timer += Time.deltaTime;
+        if (timer >= timeToWait) {
+            TransitionTo(new NormalState());
+        }
+    }
+
+    public override void OnExit() {
+        GameObject.Find("Player").GetComponent<PlayerHealth>().SetBonus(false);
+        Camera.main.backgroundColor = defaultColor;
     }
 
 }
 
 public class LowHealthState : State {
+    
+    Color c = new Color(0.7f, 0.3f, 0.2f);
+    Color defaultColor;
 
     public override void OnEnter() {
         Debug.Log("in low health state!");
+        defaultColor = Camera.main.backgroundColor;
+        Camera.main.backgroundColor = c;
+
     }
 
     public override void Update() {
         // put a heart beating?
 
         // if die go back to normal state
+        GameObject player = GameObject.Find("Player");
+        if (!player) {
+            TransitionTo(new GameOverState());
+        }
+        
     }
+
+    public override void OnExit() {
+       Camera.main.backgroundColor = defaultColor;
+    }
+
+}
+
+public class GameOverState : State {
+    
+    public override void OnEnter() {
+        Debug.Log("in game over state!");
+        Camera.main.backgroundColor = Color.white;
+
+    }
+
+    public override void Update() {
+
+        
+    }
+
 
 }
