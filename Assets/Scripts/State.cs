@@ -29,7 +29,6 @@ public class NormalState : State {
     EventManager.Handler TwoShotHandler;
     
     public override void OnEnter() {
-        Debug.Log("in normal state!");
         // register
         t = typeof(TwoShotEvent);
         TwoShotHandler = new EventManager.Handler(h);
@@ -64,7 +63,6 @@ public class BonusState : State {
     float duration = 3f;
 
     public override void OnEnter() {
-        Debug.Log("in bonus state!");
         GameObject.Find("Player").GetComponent<PlayerHealth>().SetBonus(true);
         defaultColor = Camera.main.backgroundColor;
         float t = Mathf.PingPong(Time.time, duration) / duration;

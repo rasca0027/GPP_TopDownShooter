@@ -46,6 +46,9 @@ public class EnemyManager : MonoBehaviour {
 
 	}
 	
+        public int enemyAlive() {
+            return enemies.Count;
+        }
 	// Update is called once per frame
 	void Update () {
 
