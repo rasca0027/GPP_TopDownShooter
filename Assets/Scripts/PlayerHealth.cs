@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
@@ -28,11 +29,15 @@ public class PlayerHealth : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		// check life
-		if (health <= 0) {
-			// die
-			StartCoroutine(Flash(0.3f, 3));
-		}
+            
+            // update score
+            GameObject.Find("Canvas/Score").GetComponent<Text>().text = score.ToString();
+
+            // check life
+            if (health <= 0) {
+                    // die
+                    StartCoroutine(Flash(0.3f, 3));
+            }
 
 	}
 
