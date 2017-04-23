@@ -8,9 +8,10 @@ public class EnemyManager : MonoBehaviour {
 	private List<GameObject> enemies;
 	private List<Enemy> enemiesClass;
 	private List<Enemy> toDestroy;
-    private int waveCount;
+        private int waveCount;
 	private bool waveActive;
 	private bool created;
+	private bool gameStarted;
 	private List<List<string>> levelDesign;
 
 
@@ -19,12 +20,14 @@ public class EnemyManager : MonoBehaviour {
 		enemies = new List<GameObject>();
 		enemiesClass = new List<Enemy>();
 		toDestroy = new List<Enemy>();
-	    waveCount = 0;
+	        waveCount = 0;
+	        gameStarted = false;
 		waveActive = true;
 		created = false;
 		levelDesign = new List<List<string>> { 
 		    new List<string> {"13", "2", "2"}, 
-		    new List<string> {"22", "1", "3"} 
+		    new List<string> {"22", "1", "3"}, 
+		    new List<string> {"1", "11", "22"} 
 		};
 	
 	        // create delegate
@@ -33,6 +36,15 @@ public class EnemyManager : MonoBehaviour {
 	        System.Type t = typeof(EnemyDieEvent);
 	        EventManager.Register(t, EnemyDieHandler); 
 	
+	        // create delegate
+	        EventManager.Handler GamestartHandler = new EventManager.Handler(startHandler);
+	        // register handler
+	        System.Type ty = typeof(GameStartEvent);
+	        EventManager.Register(ty, GamestartHandler); 
+	}
+
+	void startHandler(Event inputEvent) {
+	    gameStarted = true;
 	}
 
 	void dieHandler(Event inputEvent) {
@@ -52,6 +64,7 @@ public class EnemyManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+            if (gameStarted) {
 		// end of  waves
 		if ((enemiesClass.Count == 0) && (waveCount == levelDesign.Count)) {
 			Debug.Log ("wave end");
@@ -81,7 +94,7 @@ public class EnemyManager : MonoBehaviour {
 		    StopCoroutine("shooting");
 		    Destroy(e.ship);
 		}
-
+            }
 
 	
 	}

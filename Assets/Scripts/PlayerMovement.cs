@@ -9,17 +9,10 @@ public class PlayerMovement : MonoBehaviour {
 	public float thrust = 400f;
 	
 
-	// Handles player movement
-	void Update () {
 
-		// Rotation
-		/*
-		Quaternion rot = transform.rotation;
-		float z = rot.eulerAngles.z;
-		z -= Input.GetAxis ("Horizontal") * rotSpeed * Time.deltaTime;
-		rot = Quaternion.Euler (0, 0, z);
-		transform.rotation = rot;
-		*/
+	// Handles player movement
+	void Update () 
+	{
 
 		// Movement
 		Vector3 pos = transform.position;

@@ -42,3 +42,10 @@ public class TwoShotEvent : Event {
 
 }
 
+public class GameStartEvent : Event {
+    public GameStartEvent() {
+    
+    }
+
+}
+
