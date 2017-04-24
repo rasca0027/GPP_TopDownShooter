@@ -8,7 +8,6 @@ public class EnemyBulletController : MonoBehaviour {
                 GameObject.Find ("Player").GetComponent<PlayerHealth>().DamagePlayer();
                 Destroy(gameObject);
             } else if (coll.gameObject.tag == "Companion") {
-                Debug.Log("Hit companion");
                 GameObject.Find ("Guard").GetComponent<Companion>().damageCompanion();
                 Destroy(gameObject);
             }

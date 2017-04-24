@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 
 	public int health = 8;
-	public int score = 0;
 	private SpriteRenderer sp;
 	private bool bonus = false;
 
@@ -22,16 +21,16 @@ public class PlayerHealth : MonoBehaviour {
         public void handler(Event inputEvent) {
         	// add score
 		if (!bonus)
-			score += 10;
+			Service.score += 10;
 		else
-			score += 20;           
+			Service.score += 20;           
     	} 
 
 	// Update is called once per frame
 	void Update () {
             
             // update score
-            GameObject.Find("Canvas/Score").GetComponent<Text>().text = score.ToString();
+            GameObject.Find("Canvas/Score").GetComponent<Text>().text = Service.score.ToString();
 
             // check life
             if (health <= 0) {

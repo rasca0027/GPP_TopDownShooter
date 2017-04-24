@@ -91,6 +91,7 @@ public class LowHealthState : State {
     
     Color c = new Color(0.7f, 0.3f, 0.2f);
     Color defaultColor;
+    bool done = false;
 
     public override void OnEnter() {
         Debug.Log("in low health state!");
@@ -104,8 +105,9 @@ public class LowHealthState : State {
 
         // if die go back to normal state
         GameObject player = GameObject.Find("Player");
-        if (!player) {
+        if (!player && !done) {
             TransitionTo(new GameOverState());
+            done = true;
         }
         
     }

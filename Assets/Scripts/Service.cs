@@ -6,5 +6,5 @@ public static class Service  {
     public static FSM fsm = new FSM();
     public static SceneManager<TransitionData> Scenes;
     public static PrefabDB Prefabs;
-
+    public static int score = 0;
 }

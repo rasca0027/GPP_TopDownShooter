@@ -10,7 +10,7 @@ public class Companion : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        health = 5;
+        health = 3;
 
         _tree = new Tree<Companion>(
             new Selector<Companion>(
