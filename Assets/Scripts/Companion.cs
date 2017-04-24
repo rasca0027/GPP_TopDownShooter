@@ -5,10 +5,12 @@ using System.Collections;
 public class Companion : MonoBehaviour {
 
     public GameObject bullet;
+    private int health;
     private Tree<Companion> _tree;
 
     // Use this for initialization
     void Start () {
+        health = 5;
 
         _tree = new Tree<Companion>(
             new Selector<Companion>(
@@ -34,7 +36,15 @@ public class Companion : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
+        if (health <= 0) {
+            Destroy(gameObject);
+        }
         _tree.Update(this);	
+        gameObject.transform.position = GameObject.Find("Player").transform.position - 2f * transform.up;
+    }
+
+    public void damageCompanion() {
+        health -= 1;
     }
 
     private void Shoot() {
