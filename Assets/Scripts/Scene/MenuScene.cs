@@ -14,8 +14,11 @@ public class MenuScene : Scene<TransitionData> {
     }
 
     public void StartBtnOnClick() {
-        Debug.Log("click");
         Service.Scenes.PushScene<GameScene>(new TransitionData(_upgrade));
+    }
+
+    public void UpgradeBtnOnClick() {
+        Service.Scenes.PushScene<UpgradeScene>(new TransitionData());
     }
 
 }

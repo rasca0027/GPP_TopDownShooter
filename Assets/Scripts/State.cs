@@ -121,7 +121,8 @@ public class GameOverState : State {
     public override void OnEnter() {
         Debug.Log("in game over state!");
         Camera.main.backgroundColor = Color.white;
-
+        GameoverEvent e = new GameoverEvent();
+        GameObject.Find("GameManager").GetComponent<EventManager>().NotifyEventSystem(e);
     }
 
     public override void Update() {

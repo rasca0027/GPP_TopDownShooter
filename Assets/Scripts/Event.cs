@@ -49,3 +49,9 @@ public class GameStartEvent : Event {
 
 }
 
+public class GameoverEvent : Event {
+    public GameoverEvent() {
+    
+    }
+
+}

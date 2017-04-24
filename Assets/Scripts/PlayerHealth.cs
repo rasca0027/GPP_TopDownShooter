@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
-	public int health = 20;
+	public int health = 8;
 	public int score = 0;
 	private SpriteRenderer sp;
 	private bool bonus = false;
